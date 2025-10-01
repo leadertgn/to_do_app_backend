@@ -1,21 +1,15 @@
-const express = require('express');
 const Task = require('../models/Task');
-const auth = require('../middleware/auth');
 
-const router = express.Router();
-
-// GET /api/tasks - Récupérer toutes les tâches de l'utilisateur
-router.get('/', auth, async (req, res) => {
+const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user._id }).sort({ createdAt: -1 });
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la récupération des tâches.' });
   }
-});
+};
 
-// POST /api/tasks - Créer une nouvelle tâche
-router.post('/', auth, async (req, res) => {
+const createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate } = req.body;
 
@@ -32,10 +26,9 @@ router.post('/', auth, async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: 'Erreur lors de la création de la tâche.' });
   }
-});
+};
 
-// PUT /api/tasks/:id - Modifier une tâche
-router.patch('/:id', auth, async (req, res) => {
+const updateTask = async (req, res) => {
   try {
     const task = await Task.findOne({ 
       _id: req.params.id, 
@@ -57,10 +50,8 @@ router.patch('/:id', auth, async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: 'Erreur lors de la modification de la tâche.' });
   }
-});
-
-// DELETE /api/tasks/:id - Supprimer une tâche
-router.delete('/:id', auth, async (req, res) => {
+};
+const deleteTask = async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({ 
       _id: req.params.id, 
@@ -75,6 +66,11 @@ router.delete('/:id', auth, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la suppression de la tâche.' });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+    createTask,
+    getTasks,
+    deleteTask,
+    updateTask
+};

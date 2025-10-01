@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', require('./routes/auth.js'));
-app.use('/api/tasks', require('./routes/tasks.js'));
+app.use('/api/auth', require('./routes/authRoutes.js'));
+app.use('/api/tasks', require('./routes/tasksRoutes.js'));
 
 // Route de test
 app.get('/', (req, res) => {
@@ -35,6 +35,6 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Serveur démarré sur le port ${PORT}`);
+  console.log(`🚀 Serveur démarré sur le port ${PORT} - URL : http://localhost:${PORT}`);
   console.log(`📊 Environnement: ${process.env.NODE_ENV}`);
 });

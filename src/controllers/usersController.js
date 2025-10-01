@@ -1,12 +1,7 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const auth = require('../middleware/auth');
 
-const router = express.Router();
-
-// Inscription
-router.post('/register', async (req, res) => {
+const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -47,10 +42,9 @@ router.post('/register', async (req, res) => {
       error: error.message 
     });
   }
-});
+};
 
-// Connexion
-router.post('/login', async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -88,10 +82,9 @@ router.post('/login', async (req, res) => {
       error: error.message 
     });
   }
-});
+};
 
-// Profil utilisateur (protégé)
-router.get('/me', auth, async (req, res) => {
+const profile = async (req, res) => {
   res.json({
     user: {
       id: req.user._id,
@@ -99,6 +92,11 @@ router.get('/me', auth, async (req, res) => {
       email: req.user.email
     }
   });
-});
+};
 
-module.exports = router;
+
+module.exports = {
+    register,
+    profile,
+    login
+};
