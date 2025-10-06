@@ -1,12 +1,13 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const usersController = require('../controllers/usersController')
+const usersController = require('../controllers/usersController');
+const { validateRegister, validateLogin } = require('../middleware/validation.js');
 const router = express.Router();
 
 // Inscription
-router.post('/register',usersController.register);
+router.post('/register',validateRegister,usersController.register);
 // Connexion
-router.post('/login',usersController.login);
+router.post('/login',validateLogin,usersController.login);
 // Profil utilisateur (protégé)
 router.get('/me', auth,usersController.profile);
 

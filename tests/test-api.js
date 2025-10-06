@@ -1,7 +1,7 @@
 // test-api.js
 const axios = require('axios');
-
-const API_BASE = 'http://localhost:5000/api';
+const port = 1000;
+const API_BASE = `http://localhost:${port}/api`;
 
 async function testAPI() {
   try {
@@ -9,7 +9,7 @@ async function testAPI() {
 
     // Test 1: Route racine
     console.log('1. Testing route racine...');
-    const rootResponse = await axios.get('http://localhost:5000/');
+    const rootResponse = await axios.get('http://localhost:1000/');
     console.log('✅ Route racine:', rootResponse.data);
 
     // Test 2: Inscription
@@ -17,7 +17,7 @@ async function testAPI() {
     const registerResponse = await axios.post(`${API_BASE}/auth/register`, {
       username: 'testuser',
       email: 'test@example.com',
-      password: 'password123'
+      password: 'Password123'
     });
     console.log('✅ Inscription réussie');
     const token = registerResponse.data.token;
