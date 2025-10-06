@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const sanitize = require('express-mongo-sanitize');
 
 // Validation pour l'inscription
 const registerValidation = (data) => {
